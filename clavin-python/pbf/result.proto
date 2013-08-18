@@ -1,0 +1,20 @@
+
+
+message Result { 
+    required string version = 1;
+    repeated Location locations = 2;
+}
+
+
+message Location { 
+    required int32 geonameID = 1;
+    required string name = 2;
+    required string locationText = 3;
+    required string locationPosition = 4;
+    required bool fuzzy = 5;
+    required float confidence = 6;
+    required double latitude = 7;
+    required double longitude = 8;       
+}
+
+
