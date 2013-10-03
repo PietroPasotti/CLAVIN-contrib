@@ -30,16 +30,4 @@ Sample document of the wikipedia Yak article
 This will return JSON of the resolved locations 
 
 
-## Known issues 
-
-First REST call returns an error, everything after that is fine.
-
-    [error] play - Oops, unexpected message received in NettyServer (please report this problem): org.jboss.netty.handler.codec.http.DefaultHttpChunk@9d14a9
-    [error] play - Oops, unexpected message received in NettyServer (please report this problem): org.jboss.netty.handler.codec.http.DefaultHttpChunk@1b24e0f2
-    [error] play - Oops, unexpected message received in NettyServer (please report this problem): org.jboss.netty.handler.codec.http.DefaultHttpChunk@168ca218
-    [error] play - Oops, unexpected message received in NettyServer (please report this problem): org.jboss.netty.handler.codec.http.DefaultHttpChunk@a4f5b6d
-    [error] play - Oops, unexpected message received in NettyServer (please report this problem): org.jboss.netty.handler.codec.http.DefaultHttpChunk@6de4f076
-    [error] play - Oops, unexpected message received in NettyServer (please report this problem): org.jboss.netty.handler.codec.http.DefaultHttpChunk@79b933a5
-    [error] play - Oops, unexpected message received in NettyServer (please report this problem): org.jboss.netty.handler.codec.http.HttpChunk$1@6519ceb1
-
 

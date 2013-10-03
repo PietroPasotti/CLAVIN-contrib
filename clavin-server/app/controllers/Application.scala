@@ -2,9 +2,9 @@ package controllers
 
 import play.api._
 import play.api.mvc._
-import com.berico.clavin.GeoParser
-import com.berico.clavin.GeoParserFactory
-import com.berico.clavin.resolver.ResolvedLocation
+import com.bericotech.clavin.GeoParser
+import com.bericotech.clavin.GeoParserFactory
+import com.bericotech.clavin.resolver.ResolvedLocation
 import scala.collection.JavaConverters._
 import play.api.libs.json.Json
 import play.api.libs.json.JsObject

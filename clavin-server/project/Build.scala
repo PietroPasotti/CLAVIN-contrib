@@ -11,7 +11,7 @@ object ApplicationBuild extends Build {
     // Add your project dependencies here,
     jdbc,
     anorm,
-    "com.berico" % "clavin" % "0.3.3-RELEASE"
+    "com.bericotech" % "clavin" % "1.0.0rc7"
     //"com.google.code.gson" % "gson" % "2.2.4"
   )
 
@@ -19,7 +19,7 @@ object ApplicationBuild extends Build {
   val main = play.Project(appName, appVersion, appDependencies).settings(
     // Add your own project settings here     
       
-    resolvers += "Berico repository" at "http://nexus.bericotechnologies.com/content/groups/public/",
+    //resolvers += "Berico repository" at "http://nexus.bericotechnologies.com/content/groups/public/",
     resolvers += "OpenNLP repository" at "http://opennlp.sourceforge.net/maven2/"
   )
 
