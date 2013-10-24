@@ -8,6 +8,11 @@ Play framework
 
 http://www.playframework.com/
 
+cd
+curl -O http://downloads.typesafe.com/play/2.2.0/play-2.2.0.zip
+unzip play-2.2.0.zip 
+export PATH=$PATH:~/play-2.2.0 
+
 
 
 ## Point to the correct index directory
