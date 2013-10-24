@@ -7,6 +7,15 @@ pip install -r requirements.txt
 clavin-server 
 
 
+## Development 
+
+Install virtualenv and required packages
+
+    sudo pip install virtualenv 
+    virtualenv ~/venvs/clavin 
+    source ~/venvs/clavin/bin/activate 
+    cd <clavin-python> 
+    pip install -r requirements.txt 
 
 ## Usage
 
