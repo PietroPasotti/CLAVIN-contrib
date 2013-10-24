@@ -4,6 +4,10 @@
 
 pip install -r requirements.txt
 
+clavin-server 
+
+
+
 ## Usage
 
     from clavin import Clavin

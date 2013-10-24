@@ -22,7 +22,8 @@ Edit conf/application.conf and put in the correct index path
     clavin.index = "/Users/tpinney/project/CLAVIN/IndexDirectory"
 
 ## Start the server 
-
+    
+    # run play within the clavin-server directory 
     play run 
 
 
