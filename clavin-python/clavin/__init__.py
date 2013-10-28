@@ -25,8 +25,7 @@ class Clavin:
         headers = {'content-type': 'text/plain'}
         r = requests.post(self.server, data=document, headers=headers)
         results = r.json()
-        self.resolvedLocations = [resolvedLocation(record) for record in results['locations']]
-        self.version = results['version']
+        self.result = Result(results)
         self.resolved = results
         return results
 
@@ -56,15 +55,25 @@ class Clavin:
 #    def __unicode__(self):    
 
 
-class resolvedLocation:
+class Location:
 
     def __init__(self,record):
+        self.geonameID = record['geonameID']
         self.name = record['name']
         self.countryName = record['countryName']
         self.admin1Code = record['admin1Code']
+        self.locationText = record["locationText"]
+        self.locationPosition = record["locationPosition"]
+        self.fuzzy = record["fuzzy"]
+        self.confidence = record["confidence"]
         self.population = record['population']
-        self.geonameID = record['geonameID']
         self.latitude = record['latitude']
         self.longitude = record['longitude']
 
- 
+
+class Result:
+
+    def __init__(self,result):
+        self.version = result['version']
+        self.locations = [Location(record) for record in result['locations']]
+
