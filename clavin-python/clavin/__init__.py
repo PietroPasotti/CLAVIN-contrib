@@ -1,59 +1,36 @@
 import requests 
 from collections import Counter
-from pprint import pprint
-
 
 class Clavin:
+    """CLAVIN (Cartographic Location And Vicinity INdexer)
+        Copyright (C) 2012-2013 Berico Technologies
+        http://clavin.bericotechnologies.com"""
 
     def __init__(self, server):
         self.server = server
-
-    def locationsDictionary(self):
-        return self.dict_format['locations']
-
-    def whichClavin(self):
-        return self.version
-        
-#    def parse(self, document):
-    #def connect(self, server):
-    #    self.server = server 
-    #    # connect to web server, should return basic metadata to verify it is working 
 
     def resolve(self, document):
         headers = {'content-type': 'text/plain'}
         r = requests.post(self.server, data=document, headers=headers)
         results = r.json()
-        self.result = Result(results)
         self.dict_format = results
+        self.result = Result(results)
         return self.result
 
     def __unicode__(self):
-        formatted = u"{name}\t{countryName}\t"
-#admin 1 code: {admin1Code}\tpop: {population}\tid: {geonameID}\n"
-	as_unicode = [loc.name for loc in self.result.locations]
-	return as_unicode
+        return "Python-Clavin at {}".format(self.server)
 
-    def whichCountries(self):
-        countries = [location.countryName for location in self.locations]
-        howmany = Counter(countries)
-        for country,occs in howmany.iteritems():
-           print("{}\t\t\t\t{} times".format(country,occs))
-        return howmany  
+    def __str__(self):
+        return unicode(self).encode('utf-8')
 
-    def locationsByCountry(self):
-        loc_by_country = {}
-        for country in set([location.countryName for location in self.locations]):
-            loc_by_country[country] = list(set([location.name for location in self.locations if location.countryName == country]))
-#This does not actually print very pretty
-#       pprint(loc_by_country)  
-        return loc_by_country
-        
+    def whichClavin(self):
+        return self.result.version
 
-
-#    def __unicode__(self):    
-
+# TODO:        
+#    def parse(self, document):
 
 class Location:
+    """A class to store the data fields returned from the server for resolved locations"""
 
     def __init__(self,record):
         self.geonameID = record['geonameID']
@@ -69,12 +46,13 @@ class Location:
         self.longitude = record['longitude']
 
     def __unicode__(self):
-#        formatted = u"{self.name}\t{self.countryName}\tadmin 1 code: {self.admin1Code}\tpop: {self.population}\tid: {self.geonameID}\n"
         return u"{}\t{}\tadmin 1 code: {}\tpop: {}\tCLAVIN-id: {}".format(self.name, self.countryName, self.admin1Code, self.population, self.geonameID)
 
-
+    def __str__(self):
+        return unicode(self).encode('utf-8')
 
 class Result:
+    """A class to store the CLAVIN version and list of resolved Location objects"""
 
     def __init__(self,result):
         self.version = result['version']
@@ -85,3 +63,21 @@ class Result:
         for loc in self.locations:
             u_str+=(unicode(loc)+"\n")
         return u_str
+
+    def __str__(self):
+        return unicode(self).encode('utf-8')
+
+    def whichCountries(self):
+        countries = [location.countryName for location in self.locations]
+        howmany = Counter(countries)
+        return howmany  
+
+    def locationsByCountry(self):
+        loc_by_country = {}
+        for country in set([location.countryName for location in self.locations]):
+            loc_by_country[country] = list(set([location.name for location in self.locations if location.countryName == country])) 
+        return loc_by_country
+
+
+
+
