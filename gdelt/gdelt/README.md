@@ -4,10 +4,14 @@
 
     pip install django
     pip install django-tastypie
+    pip install lxml 
+    pip install defusedxml
 
     unzip 20130401.export.zip
     python manage.py syncdb 
     python loaddata.py
+
+    
 
 ## Sample queries 
 
