@@ -1,9 +1,0 @@
-pip install django
-pip install django-tastypie
-
-
-python manage.py syncdb 
-python loaddata.py
-
-
-
