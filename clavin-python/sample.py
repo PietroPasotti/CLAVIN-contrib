@@ -8,5 +8,5 @@ clv = Clavin("http://localhost:9000")
 # resolve locations in document and output results to stdout
 doc = open("document.txt","r").read()    
 res = clv.resolve(doc)
-print res 
+print(res)
 

@@ -12,7 +12,14 @@ class Clavin:
     def resolve(self, document):
         headers = {'content-type': 'text/plain'}
         r = requests.post(self.server, data=document, headers=headers)
-        results = r.json()
+        try:
+            results = r.json()
+        except Exception as e:
+            global output
+            output = r # at least we won't lose it all
+            print('Json went astray. Request saved in global "output".')
+            raise e
+            
         self.dict_format = results
         self.result = Result(results)
         return self.result
@@ -33,20 +40,14 @@ class Location:
     """A class to store the data fields returned from the server for resolved locations"""
 
     def __init__(self,record):
-        self.geonameID = record['geonameID']
-        self.name = record['name']
-        self.countryName = record['countryName']
-        self.admin1Code = record['admin1Code']
-        self.locationText = record["locationText"]
-        self.locationPosition = record["locationPosition"]
-        self.fuzzy = record["fuzzy"]
-        self.confidence = record["confidence"]
-        self.population = record['population']
-        self.latitude = record['latitude']
-        self.longitude = record['longitude']
-
+        
+        for key,value in record.items():
+            setattr(self, key, value)
+        
+        return
+        
     def __unicode__(self):
-        return u"{}\t{}\tadmin 1 code: {}\tpop: {}\tCLAVIN-id: {}".format(self.name, self.countryName, self.admin1Code, self.population, self.geonameID)
+        return u"{}\t{}\tadmin 1 code: {}\tpop: {}\tCLAVIN-id: {}".format(self.name, self.matchedName, self.admin1Code, self.population, self.geonameID)
 
     def __str__(self):
         return unicode(self).encode('utf-8')
@@ -54,10 +55,16 @@ class Location:
 class Result:
     """A class to store the CLAVIN version and list of resolved Location objects"""
 
-    def __init__(self,result):
-        self.version = result['version']
-        self.locations = [Location(record) for record in result['locations']]
-
+    def __init__(self,res):
+        try:
+            #self.version = res['version'] # no 'version' is specified in the result!!
+            self.locations = [Location(record) for record in res['resolvedLocations']]
+        except Exception as e:
+            print('Dafuq. Storing result in global "result".')
+            global result
+            result = res
+            raise e
+            
     def __unicode__(self):
         u_str = "Clavin version {}\n".format(self.version)
         for loc in self.locations:
@@ -75,7 +82,7 @@ class Result:
     def locationsByCountry(self):
         loc_by_country = {}
         for country in set([location.countryName for location in self.locations]):
-            loc_by_country[country] = list(set([location.name for location in self.locations if location.countryName == country])) 
+            loc_by_country[country] = list(set([location.name for location in self.locations if location.matchedName == country])) 
         return loc_by_country
 
 
